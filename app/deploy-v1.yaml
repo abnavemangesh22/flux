@@ -22,7 +22,7 @@ spec:
         run: school-app
     spec:
       containers:
-      - image: mangeshabnave/cgi-app-v1
+      - image: mangeshabnave/cgi-app-v2
         name: school-app
 ---
 
