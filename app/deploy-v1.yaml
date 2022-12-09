@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: school-app
+  name: school-app
+spec:
+  replicas: 8
+  selector:
+    matchLabels:
+      run: school-app
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 10
+  revisionHistoryLimit: 3
+  template:
+    metadata:
+      labels:
+        run: school-app
+    spec:
+      containers:
+      - image: mangeshabnave/cgi-app-v1
+        name: school-app
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+ name: school-app
+ labels:
+   app: school-app
+spec:
+ selector:
+   run: school-app
+ type: NodePort
+ ports:
+ - nodePort: 31000
+   port: 80
+   targetPort: 80
